@@ -9,5 +9,5 @@ def home(request):
     groups = AchievementGroup.objects.prefetch_related('achievement_set').all()
     #achieved = [l.achievement for l in AchievementLink.objects.filter(user=request.user)]
     achieved = request.user.ctfuser.achievements.all()
-    context = {'groups': groups, 'achieved': achieved}
+    context = {'groups': groups, 'achieved': achieved, 'title': 'CTF Store', 'isp': 'G-Online'}
     return render(request, 'store/home.html', context)

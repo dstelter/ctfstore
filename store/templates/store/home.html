@@ -1,21 +1,95 @@
 {% extends "base.html" %}
+{% load staticfiles %}
 
-{% block title %}CTF Store{% endblock %}
+{% block title %}{{title|escape}}{% endblock %}
+{% block header %}{% endblock %}
 
 {% block content %}
-	Your credit: {{user.ctfuser.score}}
 
+<div class="navbar navbar-default navbar-static-top" role="navigation">
+	<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#">{{title|escape}}</a>
+			</div>
+			<div class="navbar-collapse collapse">
+				<ul class="nav navbar-nav" id="navitems">
+					<li class="active"><a href="#">Übersicht</a></li>
+					<li class="dropdown">
+						<a href="#achievements" class="dropdown-toggle" data-toggle="dropdown">Achievements <b class="caret"></b></a>
+						<ul class="dropdown-menu">
+							{% for group in groups %}
+							<li><a href="#achievement-group-{{group.id}}">{{group.title|escape}}</a></li>
+							{% endfor %}
+						</ul>
+					</li>
+					<li><a href="#rewards">Upgrades</a></li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right navbar-info">
+					<li class="navbar-login-info">
+						<div id="logged-who">
+							Sie sind eingeloggt als <span class="logged-username">{{user|striptags}}</span>
+							<span id="logout"><a href="{% url 'django.contrib.auth.views.logout' %}">[Logout]</a></span>
+						</div>
+						<div id="">Punkte: {{user.ctfuser.score}}</div>
+					</li>
+				</ul>
+			</div>
+	</div>
+</div>
+
+<div class="page-header container">
+	<a name="achievements"></a>
+	<h1>{{isp}} Bonus Portal</h1>
+	<p>
+		Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.   
+
+		Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.   
+
+		Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.   
+
+		Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.   
+
+		Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis.   
+
+		At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur
+	</p>
+</div>
+<div class="container">
 	{% for group in groups %}
-	<h1>{{group.title|striptags}}</h1>
-		{% for a in group.achievement_set.all %}
-		<h2>{{a.title|striptags}}</h2>
-		{% if a.image %}
-			BILD
-		{% endif %}
-		{% if a in achieved %}
-		YES
-		{% endif %}
-		<p>{{a.description}}</p>
-		{% endfor %}
+	<a name="achievement-group-{{group.id}}"></a>
+	<h1>{{group.title|escape}}</h1>
+	<p>{{group.description|escape}}<p>
+	<div class="container">
+	{% for a in group.achievement_set.all %}
+		<div class="col-md-6 col-md-offset-1 achievement-item {% if not a in achieved %}achievement-hidden{% endif %}">
+			<h2 class="achievement-title">
+			{% if a.show_title or a in achieved %}
+				{{a.title|escape}}
+			{% else %}
+				Hidden
+			{% endif %}
+			</h2>
+			<span class="achievement-reward">({{a.reward|escape}} points)</span>
+			{% if a.image %}
+				<img src="{{a.image.url}}" class="img-thumbnail achievement-image" />
+			{% else %}
+				<img src="{% static 'store/unknown.png' %}" class="img-thumbnail achievement-image" />
+			{% endif %}
+			{% if a.show_description or a in achieved %}
+			<p class="achievement-desc">{{a.description|escape}}</p>
+			{% else %}
+			<p class="achievement-desc achievement-hidden">This achievement is not yet unlocked.</p>
+			{% endif %}
+			<br style="clear:both;" />
+		</div>
 	{% endfor %}
+	</div>
+	{% endfor %}
+</div>
 {% endblock %}

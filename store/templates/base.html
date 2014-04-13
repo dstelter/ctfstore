@@ -1,13 +1,19 @@
+{% load kwacros %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="style.css" />
-    <title>{% block title %}{% endblock %}</title>
+	<meta charset="utf-8">
+	<title>{% block title %}Store{% endblock %}</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'store/css/bootstrap.min.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'store/css/style.css' %}" />
 </head>
 
 <body>
-    <div id="content">
-        {% block content %}{% endblock %}
-    </div>
+	{% block content %}{% endblock %}
+
+	<script src="{% static 'store/js/jquery.min.js' %}"></script>
+    <script src="{% static 'store/js/bootstrap.min.js' %}"></script>
 </body>
 </html>

@@ -10,10 +10,13 @@ class CtfUserInline(admin.StackedInline):
 class CtfUserAdmin(UserAdmin):
     inlines = (CtfUserInline, )
 
+class AchievementLinkAdmin(admin.ModelAdmin):
+    list_display = ('user', 'achievement', 'time')
+
 # Register your models here.
 admin.site.register(Achievement)
 admin.site.register(AchievementGroup)
-admin.site.register(AchievementLink)
+admin.site.register(AchievementLink, AchievementLinkAdmin)
 
 # Re-register UserAdmin
 admin.site.unregister(User)
