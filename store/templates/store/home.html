@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}CTF Store{% endblock %}
+
+{% block content %}
+	Your credit: {{user.ctfuser.score}}
+
+	{% for group in groups %}
+	<h1>{{group.title|striptags}}</h1>
+		{% for a in group.achievement_set.all %}
+		<h2>{{a.title|striptags}}</h2>
+		{% if a.image %}
+			BILD
+		{% endif %}
+		{% if a in achieved %}
+		YES
+		{% endif %}
+		<p>{{a.description}}</p>
+		{% endfor %}
+	{% endfor %}
+{% endblock %}
