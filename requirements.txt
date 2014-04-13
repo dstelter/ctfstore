@@ -1,0 +1,7 @@
+django-extensions
+django-debug-toolbar
+django-bootstrap
+django-bootstrap-form
+django-templates-macros
+werkzeug
+pil
