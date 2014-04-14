@@ -6,8 +6,15 @@ from store.models import Achievement, AchievementGroup, AchievementLink
 
 @login_required
 def home(request):
-    groups = AchievementGroup.objects.prefetch_related('achievement_set').all()
-    #achieved = [l.achievement for l in AchievementLink.objects.filter(user=request.user)]
-    achieved = request.user.ctfuser.achievements.all()
-    context = {'groups': groups, 'achieved': achieved, 'title': 'CTF Store', 'isp': 'G-Online'}
-    return render(request, 'store/home.html', context)
+	return render(request, 'store/home.html')
+
+@login_required
+def achievements(request):
+	groups = AchievementGroup.objects.prefetch_related('achievement_set').all()
+	achieved = request.user.ctfuser.achievements.all()
+	context = {'groups': groups, 'achieved': achieved}
+	return render(request, 'store/achievements.html', context)
+
+@login_required
+def upgrades(request):
+	pass

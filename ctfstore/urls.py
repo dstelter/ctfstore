@@ -12,7 +12,9 @@ urlpatterns = patterns('',
 
     url(r'^login$', 'django.contrib.auth.views.login'),
     url(r'^logout$', 'django.contrib.auth.views.logout', {'next_page': 'django.contrib.auth.views.login'}),
-    url(r'^$', 'store.views.home', name='home')
+    url(r'^$', 'store.views.home', name='home'),
+    url(r'^achievements$', 'store.views.achievements', name='achievements'),
+    url(r'^upgrades$', 'store.views.upgrades', name='upgrades')
 )
 
 if settings.DEBUG:

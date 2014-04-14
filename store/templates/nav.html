@@ -1,0 +1,29 @@
+<div class="navbar navbar-default navbar-static-top" role="navigation">
+	<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#">{{title|escape}}</a>
+			</div>
+			<div class="navbar-collapse collapse">
+				<ul class="nav navbar-nav" id="navitems">
+					<li class="active"><a href="#">Übersicht</a></li>
+					<li><a href="{% url 'achievements' %}">Achievements</a></li>
+					<li><a href="{% url 'upgrades' %}">Tarifoptionen</a></li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right navbar-info">
+					<li class="navbar-login-info">
+						<div id="logged-who">
+							Sie sind eingeloggt als <span class="logged-username">{{user|striptags}}</span>
+							<span id="logout"><a href="{% url 'django.contrib.auth.views.logout' %}">[Logout]</a></span>
+						</div>
+						<div id="">Punkte: {{user.ctfuser.score}}</div>
+					</li>
+				</ul>
+			</div>
+	</div>
+</div>
