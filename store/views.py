@@ -17,4 +17,4 @@ def achievements(request):
 
 @login_required
 def upgrades(request):
-	pass
+	return render(request, 'store/upgrades.html')
