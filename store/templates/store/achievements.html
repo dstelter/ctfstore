@@ -1,10 +1,12 @@
 {% extends "base.html" %}
 {% load staticfiles %}
+{% load bootstrap %}
 
 {% block content %}
 {% include "nav.html" %}
 
 <div class="page-header container">
+	{% include "messages.html" %}
 	<a name="achievements"></a>
 	<h1>{{isp_name}} Bonus Portal</h1>
 	<p>
@@ -20,6 +22,12 @@
 
 		At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur
 	</p>
+
+	<form action="{% url 'achievements' %}" method="post">
+		{% csrf_token %}
+		{{form|bootstrap}}
+		<input type="submit" value="Einl&ouml;sen" />
+	</form>
 </div>
 <div class="container">
 	{% for group in groups %}

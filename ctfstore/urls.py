@@ -14,7 +14,10 @@ urlpatterns = patterns('',
     url(r'^logout$', 'django.contrib.auth.views.logout', {'next_page': 'django.contrib.auth.views.login'}),
     url(r'^$', 'store.views.home', name='home'),
     url(r'^achievements$', 'store.views.achievements', name='achievements'),
-    url(r'^upgrades$', 'store.views.upgrades', name='upgrades')
+    url(r'^upgrades$', 'store.views.upgrades', name='upgrades'),
+
+    url(r'^api/redeem/(?P<user_id>\d+)/(?P<unlock_key>\w+)$', 'store.views.api_redeem', name='api_redeem'),
+    url(r'^api/has/(?P<unlock_key>\w+)$$', 'store.views.api_has', name='api_redeem'),
 )
 
 if settings.DEBUG:
