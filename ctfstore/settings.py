@@ -19,6 +19,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'mg85jzkz_af%j&rrd+^c#tx7)+8a$*oyi-&=v=h97n4)vbd@gi'
 
+ISP_NAME = 'G-Online'
+ISP_HOST = 'g-online.ctf'
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -92,11 +95,10 @@ USE_TZ = True
 
 # Mail stuff
 EMAIL_SUBJECT_PREFIX = '[CTF Store] '
-SERVER_EMAIL = 'store@isp.ctf'
-ADMINS = (('CTF Admin', 'admin@isp.ctf'), )
+SERVER_EMAIL = 'store@' + ISP_HOST
+ADMINS = (('CTF Admin', 'admin@'+ ISP_HOST), )
 if DEBUG:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
