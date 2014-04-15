@@ -93,7 +93,7 @@ USE_TZ = True
 # Mail stuff
 EMAIL_SUBJECT_PREFIX = '[CTF Store] '
 SERVER_EMAIL = 'store@isp.ctf'
-ADMINS = (('CTF Admin', 'admin@isp.ctf'), ('Dummy User because Django fails if only one Admin eixsts', 'root@localhost'))
+ADMINS = (('CTF Admin', 'admin@isp.ctf'), )
 if DEBUG:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
