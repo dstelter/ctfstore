@@ -15,6 +15,7 @@ urlpatterns = patterns('',
     url(r'^$', 'store.views.home', name='home'),
     url(r'^achievements$', 'store.views.achievements', name='achievements'),
     url(r'^upgrades$', 'store.views.upgrades', name='upgrades'),
+    url(r'^upgrades/order$', 'store.views.order_upgrade', name='upgrade_order'),
 
     url(r'^api/redeem/(?P<user_id>\d+)/(?P<unlock_key>\w+)$', 'store.views.api_redeem', name='api_redeem'),
     url(r'^api/has/(?P<unlock_key>\w+)$$', 'store.views.api_has', name='api_redeem'),

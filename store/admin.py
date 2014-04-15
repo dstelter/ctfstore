@@ -13,10 +13,20 @@ class CtfUserAdmin(UserAdmin):
 class AchievementLinkAdmin(admin.ModelAdmin):
     list_display = ('user', 'achievement', 'time')
 
+class UpgradeOrderAdmin(admin.ModelAdmin):
+	list_display = ('user', 'upgrade', 'state')
+
+class UpgradeStateAdmin(admin.ModelAdmin):
+	list_display = ('title', 'subject', 'message')
+
 # Register your models here.
 admin.site.register(Achievement)
 admin.site.register(AchievementGroup)
 admin.site.register(AchievementLink, AchievementLinkAdmin)
+
+admin.site.register(Upgrade)
+admin.site.register(UpgradeState, UpgradeStateAdmin)
+admin.site.register(UpgradeOrder, UpgradeOrderAdmin)
 
 # Re-register UserAdmin
 admin.site.unregister(User)

@@ -1,4 +1,4 @@
-.achievement-image {
+img.achievement-image, img.upgrade-image {
 	float: left;
 	width: 110px;
 	margin-right: 8px;
@@ -10,7 +10,7 @@
 	color: #777;
 }
 
-.achievement-item {
+div.achievement-item, div.upgrade-item {
 	border-radius: 3px;
 	border: solid 1px grey;
 	margin-bottom: 15px;
@@ -34,4 +34,9 @@ h2.achievement-title {
 .jumbotron {
   text-align: center;
   background-color: transparent;
+}
+
+p.no-upgrades {
+	font-weight: bold;
+	font-style: italic;
 }

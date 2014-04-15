@@ -5,8 +5,8 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
-from store.models import Achievement, AchievementGroup, AchievementLink, RedeemFailure
-from store.forms import RedeemForm
+from store.models import Achievement, AchievementGroup, AchievementLink, RedeemFailure, UpgradeOrder, UpgradeState, OrderFailure
+from store.forms import RedeemForm, OrderForm
 
 # Create your views here.
 
@@ -34,7 +34,21 @@ def achievements(request):
 
 @login_required
 def upgrades(request):
-	return render(request, 'store/upgrades.html')
+	context = {'orders': UpgradeOrder.objects.filter(user=request.user.ctfuser)}
+	return render(request, 'store/upgrades.html', context)
+
+@login_required
+def order_upgrade(request):
+	if request.method == 'POST':
+		form = OrderForm(request.POST)
+		if form.is_valid():
+			upgrade = form.cleaned_data['upgrade']
+			try:
+				request.user.ctfuser.order(upgrade)
+				messages.success(request, 'Ihre Bestellung wurde entgegen genommen. Sie werden per E-Mail über den weiteren Verlauf informiert.')
+			except OrderFailure as e:
+				messages.error(request, str(e))
+	return HttpResponseRedirect(reverse('upgrades'))
 
 def api_redeem(request, user_id, unlock_key):
 	try:

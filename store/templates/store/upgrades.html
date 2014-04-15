@@ -5,6 +5,7 @@
 {% include "nav.html" %}
 
 <div class="page-header container">
+	{% include "messages.html" %}
 	<a name="achievements"></a>
 	<h1>Tarifoptionen</h1>
 	<p>
@@ -12,6 +13,29 @@
 	</p>
 </div>
 <div class="container">
-	TODO: Insert content
+	{% if orders %}
+	{% for order in orders %}
+	<div class="col-md-6 col-md-offset-1 upgrade-item">
+		<h2 class="achievement-title">{{order.upgrade.title|escape}}</h2>
+		{% with yesno_args=order.upgrade.image.url|add:",store/unknown.png" %}
+		<img src="{{order.upgrade.image|yesno:yesno_args}}" class="img-thumbnail upgrade-image" />
+		{% endwith %}
+		<p class="upgrade-desc">{{order.upgrade.description|escape}}</p>
+		{% if order.state.role == 'available' %}
+		<form action="{% url 'upgrade_order' %}" method="post">
+		<p style="clear:both;">
+			{% csrf_token %}
+			<input type="hidden" name="upgrade" value="{{order.upgrade.id}}" />
+			<button type="submit" class="btn btn-primary btn-xs">Jetzt bestellen für {{order.upgrade.price|escape}} Bonuspunkte</button>
+		</p>
+		</form>
+		{% else %}
+		<p style="clear:both;">Status: {{order.state.title|escape}}</p>
+		{% endif %}
+	</div>
+	{% endfor %}
+	{% else %}
+	<p class="no-upgrades">Derzeit stehen keine Tarifoptionen zur Verfügung. Der {{isp_name}} Kundendienst wird Sie informieren, sobald neue Tarifoptionen verfügbar sind.</p>
+	{% endif %}
 </div>
 {% endblock %}
