@@ -90,6 +90,13 @@ USE_L10N = True
 
 USE_TZ = True
 
+# Mail stuff
+EMAIL_SUBJECT_PREFIX = '[CTF Store] '
+SERVER_EMAIL = 'store@isp.ctf'
+ADMINS = (('CTF Admin', 'admin@isp.ctf'), ('Dummy User because Django fails if only one Admin eixsts', 'root@localhost'))
+if DEBUG:
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/

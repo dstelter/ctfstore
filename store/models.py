@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django.db import models
 from django.contrib.auth.models import User
+from django.core.mail import mail_admins
 import random
 import string
 
@@ -62,4 +63,14 @@ class AchievementLink(models.Model):
     def __str__(self):
         return "{} - {}".format(str(self.user), str(self.achievement))
 
+    def save(self, *args, **kwargs):
+        if self.pk is None:
+            message = ("Hello,\n"
+                       "\n"
+                       "user {user} has unlocked the achievement '{achievement}' and received {credit} credit points.\n"
+                       "\n"
+                       "Best regards\n"
+                       "a script").format(user=self.user, achievement=self.achievement.title, credit=self.achievement.reward)
+            mail_admins('Achievement unlocked by {user}: {achievement}'.format(user=self.user, achievement=self.achievement), message)
+        super(Model, self).save(*args, **kwargs)
 
