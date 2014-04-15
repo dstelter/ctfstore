@@ -37,7 +37,13 @@ def achievements(request):
 		form = RedeemForm()
 	groups = AchievementGroup.objects.prefetch_related('achievement_set').all()
 	achieved = request.user.ctfuser.achievements.all()
-	context = {'groups': groups, 'achieved': achieved, 'form': form}
+	available_all = Achievement.objects.filter(parent__in=achieved)
+	available = []
+	for a in available_all:
+		if a in achieved:
+			continue
+		available_all.add({'achievement': a, 'unlocks': [a]})
+	context = {'groups': groups, 'achieved': achieved, 'available': available, 'form': form}
 	return render(request, 'store/achievements.html', context)
 
 @login_required

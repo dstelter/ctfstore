@@ -39,16 +39,15 @@ class RedeemFailure(Exception):
 
 class Achievement(models.Model):
     title = models.CharField(max_length = 100)
+    hint = models.TextField()
     description = models.TextField()
     image = models.ImageField(upload_to='achievements/', blank=True)
-
-    show_title = models.BooleanField(default = True)
-    show_description = models.BooleanField(default = True)
-    show_image = models.BooleanField(default = True)
 
     reward = models.IntegerField()
     unlock_key = models.CharField(max_length=12, default=lambda: ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(12)))
     group = models.ForeignKey(AchievementGroup)
+
+    parent = models.ForeignKey('self', blank=True, null=True)
 
     @classmethod
     def key_length(self):
