@@ -40,3 +40,23 @@ p.no-upgrades {
 	font-weight: bold;
 	font-style: italic;
 }
+
+@font-face {
+	font-family: isphead;
+	src: url('../TeleGroteskUlt.ttf');
+}
+
+h1.with-logo:before {
+	content:url('../isp_logo.png');
+	margin-right: 10px;
+}
+
+h1.with-logo {
+	font-family: isphead;
+	color: #7C7C7C;
+}
+
+#nav-logo {
+	float: left;
+	margin: 5px;
+}

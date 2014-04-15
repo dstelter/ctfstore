@@ -1,4 +1,6 @@
+{% load staticfiles %}
 <div class="navbar navbar-default navbar-static-top" role="navigation">
+	<img src="{% static 'store/isp_logo_head.png' %}" id="nav-logo" />
 	<div class="container">
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -7,12 +9,11 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="#">{{title|escape}}</a>
 			</div>
 			<div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav" id="navitems">
 					<li class="active"><a href="{% url 'home' %}">Übersicht</a></li>
-					<li><a href="{% url 'achievements' %}">Achievements</a></li>
+					<li><a href="{% url 'achievements' %}">Bonusprogramm</a></li>
 					<li><a href="{% url 'upgrades' %}">Tarifoptionen</a></li>
 				</ul>
 				<ul class="nav navbar-nav navbar-right navbar-info">

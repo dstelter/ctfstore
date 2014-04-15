@@ -1,15 +1,16 @@
 {% extends "base.html" %}
 {% load bootstrap %}
+{% load staticfiles %}
 
-{% block title %}CTF Store: Please log in{% endblock %}
+{% block title %}{{isp_name}} Kundenlogin{% endblock %}
 
 {% block content %}
-<div class="page-header">
-    <h1>Bonus Portal</h1>
+<div class="page-header container">
+    <h1 class="with-logo">Kundencenter</h1>
 </div>
 
 <div class="container">
-    <p>Lorem Ipsum Blah.</p>
+    <p>Bitte loggen Sie sich ein, um das {{isp_name}} Kundencenter zu nutzen.</p>
 
     <form class="form-signin" role="form" action="{% url 'django.contrib.auth.views.login' %}" method="post">
         {% csrf_token %}
