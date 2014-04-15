@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block title %}{{isp_name|escape}}{% endblock %}
+
+{% block content %}
+{% include "nav.html" %}
+
+<div class="container">
+	<div class="jumbotron">
+		<h1>Karriere bei {{isp_name}}</h1>
+		<p>{{isp_name}} ist ein internationaler Kommunikationskonzern - und doch viel mehr als das. Wir sind das Zuhause individueller Talente und Fähigkeiten. Das macht {{isp_name}} zu einem professionellen Netzwerk von Persönlichkeiten. Und Sie können es zu Ihrem machen!</p>
+	</div>
+	<div class="panel panel-primary">
+		<div class="panel-heading">
+			<h3 class="panel-title">Offene Positionen</h3>
+		</div>
+		<div class="panel-body">
+			<table class="table">
+				<thead>
+					<th>#</th>
+					<th>Titel</th>
+					<th>Standort</th>
+				</thead>
+				<tbody>
+					<td colspan="3">
+						<p>Zur Zeit sind keine Positionen verfügbar.</p>
+					</td>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+{% endblock %}
