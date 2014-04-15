@@ -19,6 +19,10 @@ def career(request):
 	return render(request, 'store/career.html')
 
 @login_required
+def contact(request):
+	return render(request, 'store/contact.html')
+
+@login_required
 def achievements(request):
 	if request.method == 'POST':
 		form = RedeemForm(request.POST)
