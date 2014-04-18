@@ -23,7 +23,7 @@ urlpatterns = patterns('',
     url(r'^api/has/(?P<unlock_key>\w+)$$', 'store.views.api_has', name='api_redeem'),
 )
 
-if settings.DEBUG:
+if settings.DEBUG or True:
     # static files (images, css, javascript, etc.)
     urlpatterns += patterns('',
         (r'^media/(?P<path>.*)$', 'django.views.static.serve', {
