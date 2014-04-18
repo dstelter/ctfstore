@@ -10,6 +10,8 @@ from store.models import Achievement, AchievementGroup, AchievementLink, RedeemF
 from store.forms import RedeemForm, OrderForm
 
 # Create your views here.
+def ping(request):
+	return HttpResponse('pong')
 
 @login_required
 def home(request):

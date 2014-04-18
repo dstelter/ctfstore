@@ -18,6 +18,7 @@ urlpatterns = patterns('',
     url(r'^upgrades/order$', 'store.views.order_upgrade', name='upgrade_order'),
     url(r'^career$', 'store.views.career', name='career'),
     url(r'^contact$', 'store.views.contact', name='contact'),
+    url(r'^ping$', 'store.views.ping', name='ping'),
 
     url(r'^api/redeem/(?P<user_id>\d+)/(?P<unlock_key>\w+)$', 'store.views.api_redeem', name='api_redeem'),
     url(r'^api/has/(?P<unlock_key>\w+)$$', 'store.views.api_has', name='api_redeem'),
