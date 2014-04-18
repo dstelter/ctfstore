@@ -1,6 +1,6 @@
 {% load staticfiles %}
 <div class="navbar navbar-default navbar-static-top" role="navigation">
-	<img src="{% static 'store/isp_logo_head.png' %}" id="nav-logo" />
+	
 	<div class="container">
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -11,19 +11,22 @@
 				</button>
 			</div>
 			<div class="navbar-collapse collapse">
+				<img src="{% static 'store/isp_logo_head.png' %}" class="pull-left" id="nav-logo" />
 				<ul class="nav navbar-nav" id="navitems">
 					<li class="active"><a href="{% url 'home' %}">Übersicht</a></li>
 					<li><a href="{% url 'achievements' %}">Bonusprogramm</a></li>
 					<li><a href="{% url 'upgrades' %}">Tarifoptionen</a></li>
 					<li><a href="{% url 'contact' %}">Kontakt</a></li>
 				</ul>
-				<ul class="nav navbar-nav navbar-right navbar-info">
-					<li class="navbar-login-info">
-						<div id="logged-who">
-							Sie sind eingeloggt als <span class="logged-username">{{user|striptags}}</span>
-							<span id="logout"><a href="{% url 'django.contrib.auth.views.logout' %}">[Logout]</a></span>
-						</div>
-						<div id="">Guthaben: {{user.ctfuser.score}}</div>
+				<ul class="nav navbar-nav navbar-right">
+					<li class="navbar-text">
+						Guthaben: {{user.ctfuser.score}}
+					</li>
+					<li class="navbar-text" id="logged-who">
+							Eingeloggt als <span class="logged-username">{{user|striptags}}</span>
+					</li>
+					<li id="logout">
+						<a href="{% url 'django.contrib.auth.views.logout' %}">Logout</a>
 					</li>
 				</ul>
 			</div>
