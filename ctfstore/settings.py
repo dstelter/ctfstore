@@ -19,8 +19,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'mg85jzkz_af%j&rrd+^c#tx7)+8a$*oyi-&=v=h97n4)vbd@gi'
 
-ISP_NAME = 'T-Online'
-ISP_HOST = 't-online.ctf'
+ISP_NAME = 'G-Online'
+ISP_HOST = 'g-online.ctf'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
