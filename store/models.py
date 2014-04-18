@@ -139,6 +139,9 @@ class UpgradeOrder(models.Model):
             message = ("Guten Tag,\n\n" + self.state.message + "\n\nMit freundlichen Grüßen\nAyse Ümeron\n- Leitung {isp} Kundenbetreuung").format(upgrade=self.upgrade, isp=settings.ISP_NAME)
             subject = self.state.subject.format(upgrade=self.upgrade, isp=settings.ISP_NAME)
             send_mail(subject, message, settings.SERVER_EMAIL, [self.user.user.email])
+            adm_subject = '[{user}] upgrade {link.upgrade.title} changed state to {link.state}'.format(user=self.user, link=self)
+            adm_text = "Hello,\n\nstate of upgrade {link.upgrade.title} changed to {link.state}.\nUser: {user}\n\nBest regards,\na script".format(user=self.user, link=self)
+            mail_admins(adm_subject, adm_text)
         super().save(*args, **kwargs)
 
     def __str__(self):
