@@ -30,33 +30,38 @@
 	</form>
 </div>
 <div class="container">
-	{% for group in groups %}
+	{% for g in groups %}
 	<a name="achievement-group-{{group.id}}"></a>
-	<h1>{{group.title|escape}}</h1>
-	<p>{{group.description|escape}}<p>
+	<h1>{{g.group.title|escape}}</h1>
+	<p>{{g.group.description|escape}}<p>
 	<div class="container">
-	{% for a in group.achievement_set.all %}
-		<div class="col-md-6 col-md-offset-1 achievement-item {% if not a in achieved %}achievement-hidden{% endif %}">
-			<h2 class="achievement-title">
-			{% if a.show_title or a in achieved %}
-				{{a.title|escape}}
+	{% for a in g.achieved %}
+		<div class="col-md-6 col-md-offset-1 achievement-item">
+			<h2 class="achievement-title">{{a.title}}</h2>
+			<span class="achievement-reward">({{a.reward|escape}} Punkte)</span>
+			{% if a.image %}
+				<img src="{{a.image.url}}" class="img-thumbnail achievement-image" />
 			{% else %}
-				Hidden
+				<img src="{% static 'store/unknown.png' %}" class="img-thumbnail achievement-image" />
 			{% endif %}
-			</h2>
+			<p class="achievement-desc">{{a.description|escape}}</p>
+			<br style="clear:both;" />
+		</div>
+	{% endfor %}
+	{% for a in g.available %}
+		{% with a.achievement as a %}
+		<div class="col-md-6 col-md-offset-1 achievement-item achievement-hidden">
+			<h2 class="achievement-title">{{a.title|escape}}</h2>
 			<span class="achievement-reward">({{a.reward|escape}} points)</span>
 			{% if a.image %}
 				<img src="{{a.image.url}}" class="img-thumbnail achievement-image" />
 			{% else %}
 				<img src="{% static 'store/unknown.png' %}" class="img-thumbnail achievement-image" />
 			{% endif %}
-			{% if a.show_description or a in achieved %}
-			<p class="achievement-desc">{{a.description|escape}}</p>
-			{% else %}
-			<p class="achievement-desc achievement-hidden">This achievement is not yet unlocked.</p>
-			{% endif %}
+			<p class="achievement-desc">{{a.hint|escape}}</p>
 			<br style="clear:both;" />
 		</div>
+		{% endwith %}
 	{% endfor %}
 	</div>
 	{% endfor %}

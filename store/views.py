@@ -35,15 +35,18 @@ def achievements(request):
 			return HttpResponseRedirect(reverse('achievements'))
 	else:
 		form = RedeemForm()
-	groups = AchievementGroup.objects.prefetch_related('achievement_set').all()
 	achieved = request.user.ctfuser.achievements.all()
 	available_all = Achievement.objects.filter(parent__in=achieved)
-	available = []
-	for a in available_all:
-		if a in achieved:
-			continue
-		available_all.add({'achievement': a, 'unlocks': [a]})
-	context = {'groups': groups, 'achieved': achieved, 'available': available, 'form': form}
+	groups = {}
+	for group in AchievementGroup.objects.prefetch_related('achievement_set').all():
+		el = {'group': group, 'achieved': [], 'available': []}
+		for a in group.achievement_set:
+			if a in achieved:
+				el['achieved'].add(a)
+			elif a in available_all:
+				el['available'].add({'achievement': a, 'unlocks': Achievement.objects.filter(parent=a)})
+		groups[group.pk] = el
+	context = {'groups': groups, 'form': form}
 	return render(request, 'store/achievements.html', context)
 
 @login_required
