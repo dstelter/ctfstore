@@ -41,6 +41,7 @@ class Achievement(models.Model):
     title = models.CharField(max_length = 100)
     hint = models.TextField()
     description = models.TextField()
+    comment = models.TextField(blank=True)
     image = models.ImageField(upload_to='achievements/', blank=True)
 
     reward = models.IntegerField()

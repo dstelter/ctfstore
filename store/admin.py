@@ -10,6 +10,9 @@ class CtfUserInline(admin.StackedInline):
 class CtfUserAdmin(UserAdmin):
     inlines = (CtfUserInline, )
 
+class AchievementAdmin(admin.ModelAdmin):
+	list_display = ('title', 'description', 'comment')
+
 class AchievementLinkAdmin(admin.ModelAdmin):
     list_display = ('user', 'achievement', 'time')
 
@@ -20,7 +23,7 @@ class UpgradeStateAdmin(admin.ModelAdmin):
 	list_display = ('title', 'subject', 'message')
 
 # Register your models here.
-admin.site.register(Achievement)
+admin.site.register(Achievement, AchievementAdmin)
 admin.site.register(AchievementGroup)
 admin.site.register(AchievementLink, AchievementLinkAdmin)
 
