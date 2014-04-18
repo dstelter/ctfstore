@@ -33,8 +33,8 @@
 	<h1>{{g.group.title|escape}}</h1>
 	<p>{{g.group.description|escape}}<p>
 	<div class="container">
-	{% for a in g.available %}
-		{% with a.achievement as a %}
+	{% for av in g.available %}
+		{% with av.achievement as a %}
 		<div class="col-md-6 col-md-offset-1 achievement-item achievement-hidden">
 			<h2 class="achievement-title">{{a.title|escape}}</h2>
 			<span class="achievement-reward">({{a.reward|escape}} points)</span>
@@ -45,6 +45,17 @@
 			{% endif %}
 			<p class="achievement-desc">{{a.hint|escape}}</p>
 			<br style="clear:both;" />
+			{% if av.unlocks %}
+			<p class="achievement-desc">
+				Benötigt für:
+				<ul>
+				{% for un in av.unlocks %}
+				<li>{{un.title|escape}}</li>
+				{% endfor %}
+				</ul>
+			</p>
+			{% endif %}
+
 		</div>
 		{% endwith %}
 	{% endfor %}
