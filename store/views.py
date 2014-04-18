@@ -1,4 +1,5 @@
 import json
+from django.db.models import Q
 from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib import messages
@@ -36,15 +37,16 @@ def achievements(request):
 	else:
 		form = RedeemForm()
 	achieved = request.user.ctfuser.achievements.all()
-	available_all = Achievement.objects.filter(parent__in=achieved)
+	query = Q(parent__in=achieved) | Q(parent__isnull=True)
+	available_all = Achievement.objects.filter(query)
 	groups = {}
 	for group in AchievementGroup.objects.prefetch_related('achievement_set').all():
 		el = {'group': group, 'achieved': [], 'available': []}
-		for a in group.achievement_set:
+		for a in group.achievement_set.all():
 			if a in achieved:
-				el['achieved'].add(a)
+				el['achieved'].append(a)
 			elif a in available_all:
-				el['available'].add({'achievement': a, 'unlocks': Achievement.objects.filter(parent=a)})
+				el['available'].append({'achievement': a, 'unlocks': Achievement.objects.filter(parent=a)})
 		groups[group.pk] = el
 	context = {'groups': groups, 'form': form}
 	return render(request, 'store/achievements.html', context)

@@ -30,24 +30,11 @@
 	</form>
 </div>
 <div class="container">
-	{% for g in groups %}
+	{% for id, g in groups.items %}
 	<a name="achievement-group-{{group.id}}"></a>
 	<h1>{{g.group.title|escape}}</h1>
 	<p>{{g.group.description|escape}}<p>
 	<div class="container">
-	{% for a in g.achieved %}
-		<div class="col-md-6 col-md-offset-1 achievement-item">
-			<h2 class="achievement-title">{{a.title}}</h2>
-			<span class="achievement-reward">({{a.reward|escape}} Punkte)</span>
-			{% if a.image %}
-				<img src="{{a.image.url}}" class="img-thumbnail achievement-image" />
-			{% else %}
-				<img src="{% static 'store/unknown.png' %}" class="img-thumbnail achievement-image" />
-			{% endif %}
-			<p class="achievement-desc">{{a.description|escape}}</p>
-			<br style="clear:both;" />
-		</div>
-	{% endfor %}
 	{% for a in g.available %}
 		{% with a.achievement as a %}
 		<div class="col-md-6 col-md-offset-1 achievement-item achievement-hidden">
@@ -62,6 +49,19 @@
 			<br style="clear:both;" />
 		</div>
 		{% endwith %}
+	{% endfor %}
+	{% for a in g.achieved %}
+		<div class="col-md-6 col-md-offset-1 achievement-item">
+			<h2 class="achievement-title">{{a.title}}</h2>
+			<span class="achievement-reward">({{a.reward|escape}} Punkte)</span>
+			{% if a.image %}
+				<img src="{{a.image.url}}" class="img-thumbnail achievement-image" />
+			{% else %}
+				<img src="{% static 'store/unknown.png' %}" class="img-thumbnail achievement-image" />
+			{% endif %}
+			<p class="achievement-desc">{{a.description|escape}}</p>
+			<br style="clear:both;" />
+		</div>
 	{% endfor %}
 	</div>
 	{% endfor %}
