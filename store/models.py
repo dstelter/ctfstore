@@ -43,6 +43,7 @@ class Achievement(models.Model):
     description = models.TextField()
     comment = models.TextField(blank=True)
     image = models.ImageField(upload_to='achievements/', blank=True)
+    hidden = models.BooleanField(default=False)
 
     reward = models.IntegerField()
     unlock_key = models.CharField(max_length=12, default=lambda: ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(12)))

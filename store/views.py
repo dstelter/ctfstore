@@ -39,7 +39,7 @@ def achievements(request):
 	else:
 		form = RedeemForm()
 	achieved = request.user.ctfuser.achievements.all()
-	query = Q(parent__in=achieved) | Q(parent__isnull=True)
+	query = Q(parent__in=achieved, hidden=False) | Q(parent__isnull=True, hidden=False)
 	available_all = Achievement.objects.filter(query)
 	groups = {}
 	for group in AchievementGroup.objects.prefetch_related('achievement_set').all():
@@ -48,7 +48,7 @@ def achievements(request):
 			if a in achieved:
 				el['achieved'].append(a)
 			elif a in available_all:
-				el['available'].append({'achievement': a, 'unlocks': Achievement.objects.filter(parent=a)})
+				el['available'].append({'achievement': a, 'unlocks': Achievement.objects.filter(parent=a, hidden=False)})
 		groups[group.pk] = el
 	context = {'groups': groups, 'form': form}
 	return render(request, 'store/achievements.html', context)
