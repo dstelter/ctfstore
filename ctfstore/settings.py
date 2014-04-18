@@ -23,11 +23,11 @@ ISP_NAME = 'G-Online'
 ISP_HOST = 'g-online.ctf'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-TEMPLATE_DEBUG = True
+TEMPLATE_DEBUG = DEBUG
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [ISP_HOST, '100.65.73.94', '', '.']
 
 
 # Application definition
@@ -99,6 +99,9 @@ SERVER_EMAIL = 'store@' + ISP_HOST
 ADMINS = (('CTF Admin', 'admin@'+ ISP_HOST), )
 if DEBUG:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+else:
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    EMAIL_HOST = 'mail.g-online.ctf'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
