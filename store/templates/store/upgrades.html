@@ -28,9 +28,11 @@
 	{% for order in orders %}
 	<div class="col-md-6 col-md-offset-1 upgrade-item">
 		<h2 class="achievement-title">{{order.upgrade.title|escape}}</h2>
-		{% with yesno_args=order.upgrade.image.url|add:",store/unknown.png" %}
-		<img src="{{order.upgrade.image|yesno:yesno_args}}" class="img-thumbnail upgrade-image" />
-		{% endwith %}
+		{% if order.upgrade.image %}
+		<img src="{{order.upgrade.image.url}}" class="img-thumbnail upgrade-image" />
+		{% else %}
+		<img src="{% static 'store/unknown.png' %}" class="img-thumbnail upgrade-image" />
+		{% endif %}
 		<p class="upgrade-desc">{{order.upgrade.description|escape}}</p>
 		{% if order.state.role == 'available' %}
 		<form action="{% url 'upgrade_order' %}" method="post">
