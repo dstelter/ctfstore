@@ -1,0 +1,29 @@
+{% load staticfiles %}
+{% load get_item %}
+		<div class="achievement-container">
+			<div class="achievement-item{% if not a.unlocked %} achievement-hidden{% endif %}">
+				<h2 class="achievement-title">{{a.a.title|escape}}</h2>
+				<span class="achievement-reward">({{a.a.reward|escape}} points)</span>
+				{% if a.a.image %}
+					<img src="{{a.a.image.url}}" class="img-thumbnail achievement-image" />
+				{% else %}
+					<img src="{% static 'store/unknown.png' %}" class="img-thumbnail achievement-image" />
+				{% endif %}
+				{% if a.unlocked %}
+				<p class="achievement-desc">{{a.a.description|escape}}</p>
+				{% else %}
+				<p class="achievement-desc">{{a.a.hint|escape}}</p>
+				{% endif %}
+				<br style="clear:both;" />
+				{% if not a.unlocked and a.unlocks %}
+				<p class="achievement-desc">
+					Benötigt für: {{a.unlocks}}
+				</p>
+				{% endif %}
+			</div>
+			{% for pk in a.children %}
+			{% with a=achievements|get_item:pk template_name="store/achievement.html" %}
+				{% include template_name %}
+			{% endwith %}
+			{% endfor %}
+		</div>

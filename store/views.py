@@ -1,4 +1,5 @@
 import json
+from itertools import chain
 from django.db.models import Q
 from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponse
@@ -41,16 +42,24 @@ def achievements(request):
 	achieved = request.user.ctfuser.achievements.all()
 	query = Q(parent__in=achieved, hidden=False) | Q(parent__isnull=True, hidden=False)
 	available_all = Achievement.objects.filter(query)
+
+
+	achievements = {}
+	for a in chain(available_all, achieved):
+		achievements[a.pk] = {'a': a,
+		    'unlocked': True if a in achieved else False,
+		    'global': True if a.parent is None or (not a.parent in achieved and not a.parent in available_all) else False,
+		    'children': list(set([c.pk for c in chain(available_all, achieved) if c.parent == a])),
+		    'unlocks': ', '.join([a.title for a in Achievement.objects.filter(parent=a, hidden=False)])
+		}
 	groups = {}
-	for group in AchievementGroup.objects.prefetch_related('achievement_set').all():
-		el = {'group': group, 'achieved': [], 'available': []}
-		for a in group.achievement_set.all():
-			if a in achieved:
-				el['achieved'].append(a)
-			elif a in available_all:
-				el['available'].append({'achievement': a, 'unlocks': Achievement.objects.filter(parent=a, hidden=False)})
+	for group in AchievementGroup.objects.all():
+		group_achievements = [pk for pk, a in achievements.items() if a['a'].group == group and a['global']]
+		el = {'group': group,
+		      'achievements': group_achievements
+		}
 		groups[group.pk] = el
-	context = {'groups': groups, 'form': form}
+	context = {'achievements': achievements, 'groups': groups, 'form': form}
 	return render(request, 'store/achievements.html', context)
 
 @login_required

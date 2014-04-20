@@ -60,3 +60,6 @@ h1.with-logo {
 	float: left;
 	margin: 5px;
 }
+
+div.achievement-container { margin-left: 30px; }
+div.container > div.achievement-container { margin-left: 0px; }

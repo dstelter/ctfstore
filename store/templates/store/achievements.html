@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load staticfiles %}
 {% load bootstrap %}
+{% load get_item %}
 
 {% block content %}
 {% include "nav.html" %}
@@ -32,47 +33,13 @@
 	<a name="achievement-group-{{group.id}}"></a>
 	<h1>{{g.group.title|escape}}</h1>
 	<p>{{g.group.description|escape}}<p>
-	<div class="container">
-	{% for av in g.available %}
-		{% with av.achievement as a %}
-		<div class="col-md-6 col-md-offset-1 achievement-item achievement-hidden">
-			<h2 class="achievement-title">{{a.title|escape}}</h2>
-			<span class="achievement-reward">({{a.reward|escape}} points)</span>
-			{% if a.image %}
-				<img src="{{a.image.url}}" class="img-thumbnail achievement-image" />
-			{% else %}
-				<img src="{% static 'store/unknown.png' %}" class="img-thumbnail achievement-image" />
-			{% endif %}
-			<p class="achievement-desc">{{a.hint|escape}}</p>
-			<br style="clear:both;" />
-			{% if av.unlocks %}
-			<p class="achievement-desc">
-				Benötigt für:
-				<ul>
-				{% for un in av.unlocks %}
-				<li>{{un.title|escape}}</li>
-				{% endfor %}
-				</ul>
-			</p>
-			{% endif %}
 
-		</div>
+	{% for av in g.achievements %}
+		{% with achievements|get_item:av as a %}
+			{% include 'store/achievement.html' %}
 		{% endwith %}
 	{% endfor %}
-	{% for a in g.achieved %}
-		<div class="col-md-6 col-md-offset-1 achievement-item">
-			<h2 class="achievement-title">{{a.title}}</h2>
-			<span class="achievement-reward">({{a.reward|escape}} Punkte)</span>
-			{% if a.image %}
-				<img src="{{a.image.url}}" class="img-thumbnail achievement-image" />
-			{% else %}
-				<img src="{% static 'store/unknown.png' %}" class="img-thumbnail achievement-image" />
-			{% endif %}
-			<p class="achievement-desc">{{a.description|escape}}</p>
-			<br style="clear:both;" />
-		</div>
-	{% endfor %}
-	</div>
+
 	{% endfor %}
 </div>
 {% endblock %}
