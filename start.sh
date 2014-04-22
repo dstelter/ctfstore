@@ -1,4 +1,6 @@
 #!/bin/bash
 
- uwsgi --socket :8001 --module ctfstore.wsgi
+cd "$(dirname "$0")"
+uwsgi --socket :8001 --module ctfstore.wsgi >> /var/log/g-online 2>&1
+
  
