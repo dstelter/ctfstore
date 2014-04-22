@@ -1,3 +1,7 @@
+﻿
+
+# -*- coding: utf-8 -*-
+
 from django import forms
 from store.models import Achievement, AchievementLink, Upgrade
 

@@ -1,3 +1,7 @@
+﻿
+
+# -*- coding: utf-8 -*-
+
 import json
 from itertools import chain
 from django.db.models import Q

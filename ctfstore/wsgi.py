@@ -1,3 +1,7 @@
+﻿
+
+# -*- coding: utf-8 -*-
+
 """
 WSGI config for ctfstore project.
 

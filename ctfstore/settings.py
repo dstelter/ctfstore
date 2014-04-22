@@ -1,3 +1,7 @@
+﻿
+
+# -*- coding: utf-8 -*-
+
 """
 Django settings for ctfstore project.
 
